@@ -1,0 +1,73 @@
+openapi: 3.0.1
+info:
+  title: Code Runner
+  description: Code runner API
+  contact:
+    email: arielril@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://coderunner.localhost/v1
+tags:
+  - name: programs
+    description: Everything for the programs
+paths:
+  /nmap:
+    post:
+      tags:
+        - programs
+      summary: Run Nmap
+      operationId: runNmap
+      requestBody:
+        description: Arguments used to run nmap
+        content:
+          application/json:
+            schema:
+              properties:
+                args:
+                  type: object
+                  properties:
+                    target:
+                      type: string
+                      example: '192.168.0.1'
+                      description: IP/host of the target
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/defaultSuccessResult'
+
+  /rustscan:
+    post:
+      tags:
+        - programs
+      summary: Run rustscan
+      operationId: runRustscan
+      requestBody:
+        description: Arguments to run Rustscan
+        content:
+          application/json:
+            schema:
+              properties:
+                config:
+                  type: string
+                  description: Path for Rustscan config file
+                  example: ~/.config/rustscan.toml
+      responses:
+        200:
+          $ref: '#/components/responses/defaultSuccessResult'
+
+components:
+  responses:
+    defaultSuccessResult:
+      description: success
+      content:
+        application/json:
+          schema:
+            properties:
+              results:
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: Result values
+                      example: something here

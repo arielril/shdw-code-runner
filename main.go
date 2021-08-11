@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"github.com/arielril/attack-graph-flow-code-runner/internal/router"
+)
 
 func main() {
-	fmt.Println("go")
+	rt := router.CreateRouter()
+	rt.Run(":5000")
 }
