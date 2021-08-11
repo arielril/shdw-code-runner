@@ -1,11 +1,15 @@
-package nmap
+package nmapapi
 
 import (
 	"net/http"
 
 	"github.com/arielril/attack-graph-flow-code-runner/internal/command"
+	"github.com/arielril/attack-graph-flow-code-runner/internal/nmap"
+	"github.com/arielril/attack-graph-flow-code-runner/log"
 	"github.com/gin-gonic/gin"
 )
+
+var logger = log.GetInstance()
 
 func ExecuteNmap(c *gin.Context) {
 	var request command.ApiExecuteNmap
@@ -19,7 +23,7 @@ func ExecuteNmap(c *gin.Context) {
 		logger.WithField("target", target).Info("parsed request")
 
 		if target != "" {
-			runNmap(target)
+			nmap.Run(target)
 
 			c.JSON(http.StatusOK, gin.H{
 				"target":  target,

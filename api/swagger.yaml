@@ -6,7 +6,7 @@ info:
     email: arielril@gmail.com
   version: 1.0.0
 servers:
-  - url: http://coderunner.localhost/v1
+  - url: http://localhost:5000/v1
 tags:
   - name: programs
     description: Everything for the programs
