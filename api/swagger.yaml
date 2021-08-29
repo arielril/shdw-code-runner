@@ -23,37 +23,161 @@ paths:
           application/json:
             schema:
               properties:
-                args:
-                  type: object
+                target:
+                  type: string
+                  example: '192.168.0.1'
+                  description: IP/host of the target
+                options:
                   properties:
-                    target:
+                    service_version:
+                      type: boolean
+                      default: true
+                      description: Determine service/version info
+                      example: true
+                    hosts_online:
+                      type: boolean
+                      default: true
+                      description: Treat all hosts as online. It can be slower
+                      example: true
+                    port_range:
                       type: string
-                      example: '192.168.0.1'
-                      description: IP/host of the target
+                      description: Port range to run scan
+                      default: '1-65535'
+                      example: '1-5'
+                    default_scripts:
+                      type: boolean
+                      default: false
+                      description: Run default scripts
+                      example: false
+                    syn_scan:
+                      type: boolean
+                      default: false
+                      description: Run TCP SYN scan, map open ports
+                      example: false
+                    udp_scan:
+                      type: boolean
+                      description: Run UDP scan
+                      default: false
+                      example: false
         required: true
       responses:
         200:
-          $ref: '#/components/responses/defaultSuccessResult'
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                properties:
+                  target:
+                    type: string
+                    example: '192.168.0.1'
+                    description: IP/host of the target that was scanned
+                  ports:
+                    type: array
+                    items:
+                      properties:
+                        number:
+                          type: number
+                          description: Discovered port number
+                          example: 80
+                        state:
+                          type: string
+                          description: State of the port
+                          enum:
+                            - open
+                            - closed
+                            - filtered
+                          example: open
+                        protocol:
+                          type: string
+                          enum:
+                            - TCP
+                            - UDP
+                          description: Port protocol
+                          example: TCP
+                        owner:
+                          type: string
+                          description: Owner of the service/port
+                          example: none
+                        service:
+                          type: string
+                          description: Service that is running in the port
+                          example: http
+                        rpc_info:
+                          type: string
+                          description: Information from RPC
+                        version:
+                          type: string
+                          description: Banner/Version of the service
+                          example: 'Apache httpd 2.4.41 ((Ubuntu))'
 
-  /rustscan:
+  /ffuf:
     post:
       tags:
         - programs
-      summary: Run rustscan
-      operationId: runRustscan
+      summary: Run Ffuf
+      operationId: runFfuf
       requestBody:
-        description: Arguments to run Rustscan
+        description: Arguments to run Ffuf
         content:
           application/json:
             schema:
               properties:
-                config:
+                target:
                   type: string
-                  description: Path for Rustscan config file
-                  example: ~/.config/rustscan.toml
+                  description: Target URL
+                  example: http://previse.htb
+                recursion:
+                  type: boolean
+                  default: false
+                  description: Fuzz the URL paths recursively
+                  example: false
+                redirect:
+                  type: boolean
+                  default: false
+                  description: Follow redirects (HTTP status 301)
+                  example: false
+                ignore_status:
+                  type: array
+                  items:
+                    type: number
+                  example:
+                    - 403
+                    - 419
+                    - 401
+                  description: List of HTTP status code to filter out
       responses:
         200:
-          $ref: '#/components/responses/defaultSuccessResult'
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      properties:
+                        status_code:
+                          type: number
+                          description: Returned HTTP status code
+                          example: 200
+                        path:
+                          type: string
+                          description: URL path
+                          example: '/dashboard_admin'
+                        content:
+                          properties:
+                            length:
+                              type: number
+                              description: Length of the returned content
+                              example: 123
+                            words:
+                              type: number
+                              description: Number of words
+                              example: 3
+                            lines:
+                              type: number
+                              description: Number of lines
+                              example: 64
 
 components:
   responses:

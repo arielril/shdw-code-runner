@@ -1,6 +1,12 @@
 # Attack Graph Flow - Code Runner
 
-\#golang
+## Setup
+
+TODO
+
+## Running
+
+-  web server at port `5000`
 
 
 ## Resources
