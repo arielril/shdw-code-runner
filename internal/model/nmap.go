@@ -12,11 +12,12 @@ type ApiExecuteNmapOptions struct {
 	DefaultScripts bool   `json:"default_scripts" default:"false"`
 	SynScan        bool   `json:"syn_scan" default:"false"`
 	UdpScan        bool   `json:"udp_scan" default:"false"`
+	Verbose        bool   `json:"verbose" default:"false"`
 }
 
 type ApiExecuteNmap200Response struct {
-	Target string                            `json:"target"`
-	Ports  []*ApiExecuteNmap200PortsResponse `json:"ports"`
+	Target string                           `json:"target"`
+	Ports  []ApiExecuteNmap200PortsResponse `json:"ports"`
 }
 
 type ApiExecuteNmap200PortsResponse struct {
@@ -37,4 +38,15 @@ type NmapOptions struct {
 	DefaultScripts bool
 	SynScan        bool
 	UdpScan        bool
+	Verbose        bool
+}
+
+type NmapPortInfo struct {
+	Number   int
+	State    string
+	Protocol string
+	Owner    string
+	Service  string
+	RpcInfo  string
+	Version  string
 }

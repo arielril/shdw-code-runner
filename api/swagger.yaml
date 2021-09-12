@@ -59,6 +59,11 @@ paths:
                       description: Run UDP scan
                       default: false
                       example: false
+                    verbose:
+                      type: boolean
+                      description: Execute nmap with verbose flag
+                      default: false
+                      example: false
         required: true
       responses:
         200:

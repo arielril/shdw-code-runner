@@ -12,30 +12,57 @@ import (
 var logger = log.GetInstance()
 
 func ExecuteNmap(c *gin.Context) {
-	var request *model.ApiExecuteNmap
+	var request model.ApiExecuteNmap
 
 	err := c.BindJSON(&request)
 	if err == nil {
 		logger.Debug("parsed request")
 
-		nmapOpts := nmap.ApiExecuteToInternalStruct(*request)
+		nmapOpts := nmap.ApiExecuteToInternalStruct(request)
 
 		logger.WithField("target", nmapOpts.Target).Info("parsed request")
 
 		if nmapOpts.Target != "" {
-			nmap.Run(nmapOpts)
+			resultFile, err := nmap.Run(nmapOpts)
+
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error":   err,
+					"message": "failed to run nmap",
+				})
+				return
+			}
+
+			portResult, err := nmap.ParseScanResult(resultFile)
+
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error":   err,
+					"message": "failed to parse result from nmap",
+				})
+				return
+			}
+
+			response := make([]model.ApiExecuteNmap200PortsResponse, 0)
+
+			for _, port := range portResult {
+				response = append(
+					response,
+					model.ApiExecuteNmap200PortsResponse{
+						Number:   port.Number,
+						State:    port.State,
+						Protocol: port.Protocol,
+						Owner:    port.Owner,
+						Service:  port.Service,
+						RpcInfo:  port.RpcInfo,
+						Version:  port.Version,
+					},
+				)
+			}
 
 			resp := &model.ApiExecuteNmap200Response{
 				Target: nmapOpts.Target,
-				Ports: []*model.ApiExecuteNmap200PortsResponse{
-					{
-						Number:   80,
-						State:    "open",
-						Protocol: "TCP",
-						Service:  "http",
-						Version:  "Apache httpd 2.4.41 ((Ubuntu))",
-					},
-				},
+				Ports:  response,
 			}
 
 			c.JSON(http.StatusOK, resp)

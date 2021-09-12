@@ -3,7 +3,7 @@ package nmap
 import "github.com/arielril/attack-graph-flow-code-runner/internal/model"
 
 func ApiExecuteToInternalStruct(apiEx model.ApiExecuteNmap) *model.NmapOptions {
-	r := &model.NmapOptions{}
+	r := new(model.NmapOptions)
 
 	r.Target = apiEx.Target
 
@@ -14,6 +14,7 @@ func ApiExecuteToInternalStruct(apiEx model.ApiExecuteNmap) *model.NmapOptions {
 		r.DefaultScripts = apiEx.Options.DefaultScripts
 		r.SynScan = apiEx.Options.SynScan
 		r.UdpScan = apiEx.Options.UdpScan
+		r.Verbose = apiEx.Options.Verbose
 	}
 
 	return r
