@@ -20,7 +20,7 @@ func ExecuteNmap(c *gin.Context) {
 
 		nmapOpts := nmap.ApiExecuteToInternalStruct(request)
 
-		logger.WithField("target", nmapOpts.Target).Info("parsed request")
+		logger.WithField("target", nmapOpts.Target).Debug("parsed request")
 
 		if nmapOpts.Target != "" {
 			resultFile, err := nmap.Run(nmapOpts)
