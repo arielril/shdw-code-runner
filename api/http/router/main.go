@@ -3,6 +3,7 @@ package router
 import (
 	"os"
 
+	"github.com/arielril/attack-graph-flow-code-runner/api/http/ffufapi"
 	"github.com/arielril/attack-graph-flow-code-runner/api/http/nmapapi"
 	"github.com/arielril/attack-graph-flow-code-runner/log"
 	"github.com/gin-gonic/gin"
@@ -14,6 +15,7 @@ func CreateRouter() *gin.Engine {
 	rt := gin.Default()
 
 	rt.POST("/v1/nmap", nmapapi.ExecuteNmap)
+	rt.POST("/v1/ffuf", ffufapi.ExecuteFfuf)
 
 	return rt
 }
@@ -33,5 +35,6 @@ func SetupOutputFolder() {
 	nmapDir, _ := os.MkdirTemp(tmpDir, "nmap")
 	os.Setenv("xxxx_TMP_DIR_NMAP", nmapDir)
 	// create FFuF folder
-	os.MkdirTemp(tmpDir, "ffuf")
+	ffufDir, _ := os.MkdirTemp(tmpDir, "ffuf")
+	os.Setenv("xxxx_TMP_DIR_FFUF", ffufDir)
 }

@@ -69,6 +69,6 @@ func ExecuteNmap(c *gin.Context) {
 		}
 	} else {
 		logger.WithError(err).Warn("failed to parse request")
-		c.JSON(http.StatusBadRequest, gin.H{"failed": true})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "failed to parse request"})
 	}
 }

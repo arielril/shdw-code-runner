@@ -1,0 +1,95 @@
+{
+  "commandline": "ffuf -u https://compras.agi.com.br/FUZZ -w /opt/seclists/Discovery/Web-Content/hyperion.txt -o /var/folders/w4/pg70k6pd6k3dsr9fd6jhrm480000gn/T/3236054938/ffuf2619380997/XVlBzgb -fc 403,419,401",
+  "time": "2021-09-12T16:26:44-03:00",
+  "results": [
+    {
+      "input": {
+        "FUZZ": "HFM/"
+      },
+      "position": 2,
+      "status": 200,
+      "length": 101891,
+      "words": 13779,
+      "lines": 2832,
+      "content-type": "text/html; charset=UTF-8",
+      "redirectlocation": "",
+      "resultfile": "",
+      "url": "https://compras.agi.com.br/HFM/",
+      "host": "compras.agi.com.br"
+    },
+    {
+      "input": {
+        "FUZZ": "/"
+      },
+      "position": 1,
+      "status": 200,
+      "length": 97367,
+      "words": 22966,
+      "lines": 2069,
+      "content-type": "text/html; charset=UTF-8",
+      "redirectlocation": "",
+      "resultfile": "",
+      "url": "https://compras.agi.com.br//",
+      "host": "compras.agi.com.br"
+    }
+  ],
+  "config": {
+    "autocalibration": false,
+    "autocalibration_strings": [],
+    "colors": false,
+    "cmdline": "ffuf -u https://compras.agi.com.br/FUZZ -w /opt/seclists/Discovery/Web-Content/hyperion.txt -o /var/folders/w4/pg70k6pd6k3dsr9fd6jhrm480000gn/T/3236054938/ffuf2619380997/XVlBzgb -fc 403,419,401",
+    "configfile": "",
+    "postdata": "",
+    "delay": {
+      "value": "0.00"
+    },
+    "dirsearch_compatibility": false,
+    "extensions": [],
+    "filters": {
+      "status": {
+        "value": "403,419,401"
+      }
+    },
+    "follow_redirects": false,
+    "headers": {},
+    "ignorebody": false,
+    "ignore_wordlist_comments": false,
+    "inputmode": "clusterbomb",
+    "cmd_inputnum": 100,
+    "inputproviders": [
+      {
+        "name": "wordlist",
+        "keyword": "FUZZ",
+        "value": "/opt/seclists/Discovery/Web-Content/hyperion.txt"
+      }
+    ],
+    "inputshell": "",
+    "matchers": {
+      "status": {
+        "value": "200,204,301,302,307,401,403,405"
+      }
+    },
+    "maxtime": 0,
+    "maxtime_job": 0,
+    "method": "GET",
+    "noninteractive": false,
+    "outputdirectory": "",
+    "outputfile": "/var/folders/w4/pg70k6pd6k3dsr9fd6jhrm480000gn/T/3236054938/ffuf2619380997/XVlBzgb",
+    "outputformat": "json",
+    "OutputCreateEmptyFile": false,
+    "proxyurl": "",
+    "quiet": false,
+    "rate": 0,
+    "recursion": false,
+    "recursion_depth": 0,
+    "recursion_strategy": "default",
+    "replayproxyurl": "",
+    "stop_403": false,
+    "stop_all": false,
+    "stop_errors": false,
+    "threads": 40,
+    "timeout": 10,
+    "url": "https://compras.agi.com.br/FUZZ",
+    "verbose": false
+  }
+}

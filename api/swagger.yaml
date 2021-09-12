@@ -129,8 +129,8 @@ paths:
               properties:
                 target:
                   type: string
-                  description: Target URL
-                  example: http://previse.htb
+                  description: Target URL. Use the `FUZZ` keyword to set the "fuzzing point"
+                  example: http://my-evil-website.com/FUZZ
                 recursion:
                   type: boolean
                   default: false
