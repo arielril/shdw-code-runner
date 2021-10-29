@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const defaultWordlist = "/opt/seclists/Discovery/Web-Content/hyperion.txt"
+const defaultWordlist = "/opt/seclists/Discovery/Web-Content/raft-small-words.txt"
 
 var logger = log.GetInstance()
 
@@ -44,6 +44,7 @@ func Run(opts *model.FfufOptions) (outputFile string, err error) {
 		logOpts["recursion"] = true
 	}
 
+	logger.WithFields(logOpts).Info("running ffuf")
 	err = cmd.Run()
 	if err != nil {
 		logger.WithError(err).Warn("failed to execute FFuf")
